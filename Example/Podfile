@@ -1,0 +1,11 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+target 'NPageController', :exclusive => true do
+  pod "NPageController", :path => "../"
+end
+
+target 'Tests', :exclusive => true do
+  pod "NPageController", :path => "../"
+
+  
+end
