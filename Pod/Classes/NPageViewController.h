@@ -6,8 +6,10 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+@import UIKit;
 
-@interface NPageViewController : NSObject
+@interface NPageViewController : UIPageViewController
+
+- (void)setCurrentPage:(NSInteger)page;
 
 @end

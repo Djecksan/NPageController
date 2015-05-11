@@ -8,8 +8,46 @@
 
 #import "NPageViewController.h"
 
+@interface NPageViewController ()<UIPageViewControllerDataSource, UIPageViewControllerDelegate, UIScrollViewDelegate>
+
+@property (nonatomic, weak) UIScrollView *pageControllerScrollView;
+
+@end
+
 @implementation NPageViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+
+    self.delegate = self;
+    self.dataSource = self;
+
+    self.pageControllerScrollView = self.view.subviews.firstObject;
+    self.pageControllerScrollView.delegate = self;
+
+    [self reloadViewControllers];
+
+}
+
+- (void)setCurrentPage:(NSInteger)page {
+
+}
+
+- (void)reloadViewControllers {
+
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController {
+    return nil;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController {
+    return nil;
+}
 @end
 
 
