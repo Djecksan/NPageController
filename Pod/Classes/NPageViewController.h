@@ -8,8 +8,15 @@
 
 @import UIKit;
 
-@interface NPageViewController : UIPageViewController
+@interface NHPageViewController : UIPageViewController
+
+@property (nonatomic, readonly, assign) NSInteger pageIndex;
 
 - (void)setCurrentPage:(NSInteger)page;
+- (void)setCurrentPage:(NSInteger)page animated:(BOOL)animated;
+- (void)setCurrentPage:(NSInteger)page
+              animated:(BOOL)animated
+                 force:(BOOL)force;
 
+- (void)setPages:(NSArray*)array;
 @end
