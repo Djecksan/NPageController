@@ -105,6 +105,7 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat width = scrollView.bounds.size.width;
+    CGPoint contentOffset = scrollView.contentOffset;
     
     if (scrollView.contentOffset.x == width) {
         [self.innerPages enumerateObjectsUsingBlock:^(UIViewController *obj,
@@ -115,10 +116,19 @@
                 
                 __weak __typeof(self) weakSelf = self;
                 if ([weakSelf.nhDelegate respondsToSelector:@selector(nhPageViewController:didChangePageToIndex:andController:)]) {
-                    [weakSelf.nhDelegate nhPageViewController:weakSelf didChangePageToIndex:idx andController:obj];
+                    [weakSelf.nhDelegate nhPageViewController:weakSelf
+                                         didChangePageToIndex:idx
+                                                andController:obj];
                 }
             }
         }];
+    }
+    
+    __weak __typeof(self) weakSelf = self;
+    if ([weakSelf.nhDelegate respondsToSelector:@selector(nhPageViewController:didScrollView:toOffset:)]) {
+        [weakSelf.nhDelegate nhPageViewController:weakSelf
+                                    didScrollView:scrollView
+                                         toOffset:contentOffset];
     }
 }
 

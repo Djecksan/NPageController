@@ -16,6 +16,10 @@
 - (void)nhPageViewController:(NHPageViewController*)pageController
         didChangePageToIndex:(NSInteger)index
                andController:(UIViewController*)controller;
+
+- (void)nhPageViewController:(NHPageViewController*)pageController
+               didScrollView:(UIScrollView*)scrollView
+                    toOffset:(CGPoint)offset;
 @end
 
 @interface NHPageViewController : UIPageViewController

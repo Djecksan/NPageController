@@ -64,8 +64,12 @@
     
     [self.pageViewController setPages:@[firstViewController, secondViewController]];
     
+    
+    
     [self addChildViewController:self.pageViewController];
     [self.view addSubview:self.pageViewController.view];
+    
+    [self.pageViewController setCurrentPage:1];
     
     [self.pageViewController.view setTranslatesAutoresizingMaskIntoConstraints:NO];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.pageViewController.view
@@ -107,6 +111,12 @@
 - (void)nhPageViewController:(NHPageViewController *)pageController didChangePageToIndex:(NSInteger)index andController:(UIViewController *)controller {
     [self.firstButton setTitle:[@(index) stringValue] forState:UIControlStateNormal];
     [self.seconButton setTitle:[@(index) stringValue] forState:UIControlStateNormal];
+}
+
+- (void)nhPageViewController:(NHPageViewController *)pageController
+               didScrollView:(UIScrollView *)scrollView
+                    toOffset:(CGPoint)offset {
+    NSLog(@"%@", NSStringFromCGPoint(offset));
 }
 
 
