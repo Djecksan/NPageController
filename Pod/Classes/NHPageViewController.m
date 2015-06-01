@@ -164,6 +164,7 @@
 
 - (void)dealloc {
     self.pageControllerScrollView.delegate = nil;
+    self.nhDelegate = nil;
     self.dataSource = nil;
     self.delegate = nil;
 }
