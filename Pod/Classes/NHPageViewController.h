@@ -8,7 +8,19 @@
 
 @import UIKit;
 
+@class NHPageViewController;
+
+@protocol NHPageViewControllerDelegate <NSObject>
+
+@optional
+- (void)nhPageViewController:(NHPageViewController*)pageController
+        didChangePageToIndex:(NSInteger)index
+               andController:(UIViewController*)controller;
+@end
+
 @interface NHPageViewController : UIPageViewController
+
+@property (nonatomic, weak) id<NHPageViewControllerDelegate> nhDelegate;
 
 @property (nonatomic, readonly, assign) NSInteger pageIndex;
 
