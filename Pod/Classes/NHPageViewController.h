@@ -25,8 +25,13 @@
 @interface NHPageViewController : UIPageViewController
 
 @property (nonatomic, weak) id<NHPageViewControllerDelegate> nhDelegate;
+@property (nonatomic, readonly, weak) UIScrollView *pageControllerScrollView;
 
 @property (nonatomic, readonly, assign) NSInteger pageIndex;
+
+@property (nonatomic, readonly, copy) NSArray *pages;
+
+- (void)setPage:(UIViewController*)page atIndex:(NSInteger)index;
 
 - (void)setCurrentPage:(NSInteger)page;
 - (void)setCurrentPage:(NSInteger)page animated:(BOOL)animated;

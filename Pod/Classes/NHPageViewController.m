@@ -21,6 +21,23 @@
 
 @implementation NHPageViewController
 
+- (void)setPage:(UIViewController*)page atIndex:(NSInteger)index {
+    if (index >= self.innerPages.count) {
+        return;
+    }
+    
+    NSMutableArray *array = [self.innerPages mutableCopy];
+    
+    array[index] = page;
+    
+    self.innerPages = array;
+}
+
+
+- (NSArray *)pages {
+    return self.innerPages;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
