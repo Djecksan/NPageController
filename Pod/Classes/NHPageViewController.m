@@ -119,6 +119,8 @@
             return;
         }
     
+    UIViewController *viewController = self.navigationController ?: self.parentViewController ?: self;
+    viewController.view.userInteractionEnabled = NO;
     
     self.transitionTimestamp = [[NSDate date] timeIntervalSince1970];
     NSTimeInterval transitionTimestamp = self.transitionTimestamp;
@@ -132,6 +134,8 @@
                   completion:^(BOOL finished) {
                       dispatch_async(dispatch_get_main_queue(), ^{
                           __strong __typeof(weakSelf) strongSelf = weakSelf;
+                          
+                          viewController.view.userInteractionEnabled = YES;
                           
                           if (strongSelf.transitionTimestamp != transitionTimestamp) {
                               return;
