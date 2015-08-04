@@ -33,6 +33,20 @@
     self.innerPages = array;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    self.view.userInteractionEnabled = YES;
+    
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    
+    self.view.userInteractionEnabled = YES;
+    
+    [self setCurrentPage:self.pageIndex animated:YES force:YES withCompletion:nil];
+}
 
 - (NSArray *)pages {
     return self.innerPages;
@@ -57,22 +71,6 @@
     }
     
 }
-
-//- (void)viewWillAppear:(BOOL)animated {
-//    [super viewWillAppear:animated];
-//}
-//
-//- (void)viewWillDisappear:(BOOL)animated {
-//    [super viewWillDisappear:animated];
-//}
-//
-//- (void)viewDidAppear:(BOOL)animated {
-//    [super viewDidAppear:animated];
-//}
-//
-//- (void)viewDidDisappear:(BOOL)animated {
-//    [super viewDidDisappear:animated];
-//}
 
 - (void)setPages:(NSArray*)array {
     self.innerPages = array;
@@ -165,6 +163,13 @@
     }
 }
 
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    self.view.userInteractionEnabled = NO;
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    self.view.userInteractionEnabled = YES;
+}
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat width = scrollView.bounds.size.width;
