@@ -83,16 +83,35 @@
                 animated:NO];
 }
 
+- (void)setCurrentPage:(NSInteger)page withCompletion:(void (^)(void))completion {
+    [self setCurrentPage:page
+                animated:NO
+          withCompletion:completion];
+}
+
 - (void)setCurrentPage:(NSInteger)page
               animated:(BOOL)animated {
     [self setCurrentPage:page
                 animated:animated
-                   force:NO];
+                   force:NO withCompletion:nil];
+}
+
+- (void)setCurrentPage:(NSInteger)page
+              animated:(BOOL)animated withCompletion:(void (^)(void))completion {
+    [self setCurrentPage:page
+                animated:animated
+                   force:NO withCompletion:completion];
 }
 
 - (void)setCurrentPage:(NSInteger)page
               animated:(BOOL)animated
                  force:(BOOL)force {
+    [self setCurrentPage:page animated:animated force:force withCompletion:nil];
+}
+- (void)setCurrentPage:(NSInteger)page
+              animated:(BOOL)animated
+                 force:(BOOL)force
+        withCompletion:(void (^)(void))completion {
     if (page < 0
         || page > self.innerPages.count - 1
         || (page == self.pageIndex
@@ -123,7 +142,11 @@
                               [strongSelf setViewControllers:@[strongSelf.innerPages[page]]
                                                    direction:UIPageViewControllerNavigationDirectionForward
                                                     animated:NO
-                                                  completion:nil];
+                                                  completion:^(BOOL finished) {
+                                                      if (completion) {
+                                                          completion();
+                                                      }
+                                                  }];
                           }
                       });
                       
@@ -132,6 +155,9 @@
     if (!animated) {
         self.pageIndex = page;
         [self scrollViewDidScroll:self.pageControllerScrollView];
+        if (completion) {
+            completion();
+        }
     }
 }
 

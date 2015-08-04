@@ -34,10 +34,20 @@
 - (void)setPage:(UIViewController*)page atIndex:(NSInteger)index;
 
 - (void)setCurrentPage:(NSInteger)page;
-- (void)setCurrentPage:(NSInteger)page animated:(BOOL)animated;
+- (void)setCurrentPage:(NSInteger)page
+        withCompletion:(void(^)(void))completion;
+- (void)setCurrentPage:(NSInteger)page
+              animated:(BOOL)animated;
+- (void)setCurrentPage:(NSInteger)page
+              animated:(BOOL)animated
+        withCompletion:(void(^)(void))completion;
 - (void)setCurrentPage:(NSInteger)page
               animated:(BOOL)animated
                  force:(BOOL)force;
+- (void)setCurrentPage:(NSInteger)page
+              animated:(BOOL)animated
+                 force:(BOOL)force
+        withCompletion:(void(^)(void))completion;
 
 - (void)setPages:(NSArray*)array;
 @end
