@@ -7,6 +7,7 @@
 //
 
 #import "NViewController.h"
+#import "NEmptyViewController.h"
 
 @interface NViewController ()<NHPageViewControllerDelegate>
 
@@ -17,20 +18,6 @@
 @end
 
 @implementation NViewController
-//
-//- (id)initWithCoder:(NSCoder *)aDecoder {
-//    return [self init];
-//}
-//
-//- (instancetype)initWithTransitionStyle:(UIPageViewControllerTransitionStyle)style
-//                  navigationOrientation:(UIPageViewControllerNavigationOrientation)navigationOrientation
-//                                options:(NSDictionary *)options {
-//    return [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
-//                    navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-//                                  options:@{
-//                                            UIPageViewControllerOptionInterPageSpacingKey : @10
-//                                            }];
-//}
 
 - (void)viewDidLoad
 {
@@ -56,10 +43,10 @@
                                          }];
     self.pageViewController.nhDelegate = self;
     
-    UIViewController *firstViewController = [[UIViewController alloc] init];
+    NEmptyViewController *firstViewController = [[NEmptyViewController alloc] init];
     firstViewController.view.backgroundColor = [UIColor redColor];
     
-    UIViewController *secondViewController = [[UIViewController alloc] init];
+    NEmptyViewController *secondViewController = [[NEmptyViewController alloc] init];
     secondViewController.view.backgroundColor = [UIColor greenColor];
     
     [self.pageViewController setPages:@[firstViewController, secondViewController]];
@@ -99,7 +86,26 @@
     
     [super viewDidLoad];
     
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        UIViewController *viewController = [[UIViewController alloc] init];
+        viewController.view.backgroundColor = [UIColor greenColor];
+        
+        [self.navigationController pushViewController:viewController animated:YES];
+    });
 }
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    
+    NSLog(@"dis");
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    NSLog(@"app");
+}
+
 - (void)firstButtonTouch:(id)_ {
     [self.pageViewController setCurrentPage:0 animated:YES];
 }
@@ -116,7 +122,7 @@
 - (void)nhPageViewController:(NHPageViewController *)pageController
                didScrollView:(UIScrollView *)scrollView
                     toOffset:(CGPoint)offset {
-    NSLog(@"%@", NSStringFromCGPoint(offset));
+//    NSLog(@"%@", NSStringFromCGPoint(offset));
 }
 
 
