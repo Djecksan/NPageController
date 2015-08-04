@@ -36,14 +36,16 @@
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    self.view.userInteractionEnabled = YES;
+    UIViewController *viewController = [self interactionViewController];
+    viewController.view.userInteractionEnabled = YES;
     
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
     [super viewDidDisappear:animated];
     
-    self.view.userInteractionEnabled = YES;
+    UIViewController *viewController = [self interactionViewController];
+    viewController.view.userInteractionEnabled = YES;
     
     [self setCurrentPage:self.pageIndex animated:YES force:YES withCompletion:nil];
 }
@@ -106,6 +108,11 @@
                  force:(BOOL)force {
     [self setCurrentPage:page animated:animated force:force withCompletion:nil];
 }
+
+- (UIViewController*)interactionViewController {
+    return self.parentViewController ?: self;
+}
+
 - (void)setCurrentPage:(NSInteger)page
               animated:(BOOL)animated
                  force:(BOOL)force
@@ -117,7 +124,7 @@
             return;
         }
     
-    UIViewController *viewController = self.navigationController ?: self.parentViewController ?: self;
+    UIViewController *viewController = [self interactionViewController];
     viewController.view.userInteractionEnabled = NO;
     
     self.transitionTimestamp = [[NSDate date] timeIntervalSince1970];
@@ -130,10 +137,10 @@
                               : UIPageViewControllerNavigationDirectionForward)
                     animated:animated
                   completion:^(BOOL finished) {
+                      viewController.view.userInteractionEnabled = YES;
+                      
                       dispatch_async(dispatch_get_main_queue(), ^{
                           __strong __typeof(weakSelf) strongSelf = weakSelf;
-                          
-                          viewController.view.userInteractionEnabled = YES;
                           
                           if (strongSelf.transitionTimestamp != transitionTimestamp) {
                               return;
@@ -164,11 +171,13 @@
 }
 
 - (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
-    self.view.userInteractionEnabled = NO;
+    UIViewController *viewController = [self interactionViewController];
+    viewController.view.userInteractionEnabled = NO;
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    self.view.userInteractionEnabled = YES;
+    UIViewController *viewController = [self interactionViewController];
+    viewController.view.userInteractionEnabled = YES;
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
