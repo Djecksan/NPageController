@@ -118,7 +118,7 @@
                  force:(BOOL)force
         withCompletion:(void (^)(void))completion {
     if (page < 0
-        || page > self.innerPages.count - 1
+        || page >= self.innerPages.count - 1
         || (page == self.pageIndex
             && !force)) {
             return;
