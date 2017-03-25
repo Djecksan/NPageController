@@ -76,6 +76,13 @@
 
 - (void)setPages:(NSArray*)array {
     self.innerPages = array;
+    
+    if (self.innerPages.firstObject) {
+        [self setViewControllers:@[self.innerPages.firstObject]
+                       direction:UIPageViewControllerNavigationDirectionForward
+                        animated:NO
+                      completion:nil];
+    }
 }
 
 - (void)setCurrentPage:(NSInteger)page {
